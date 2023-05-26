@@ -1,4 +1,4 @@
-export const shuffle = (array) => {
+export const shuffle = (array: string[]): string[] => {
 	let currentIndex = array.length,
 		randomIndex;
 	while (currentIndex != 0) {
@@ -9,12 +9,17 @@ export const shuffle = (array) => {
 
 	return array;
 };
-const rotate = (matrix) => {
+const rotate = (matrix: number[][]) => {
 	const N = matrix.length - 1;
 	const result = matrix.map((row, i) => row.map((val, j) => matrix[N - j][i]));
 	return result;
 };
-export const isValidPos = (tetromino, tetrominoRow, tetrominoCol, playArea) => {
+export const isValidPos = (
+	tetromino: number[][],
+	tetrominoRow: number,
+	tetrominoCol: number,
+	playArea: (string | number)[][],
+): boolean => {
 	for (let row = 0; row < tetromino.length; row++) {
 		for (let col = 0; col < tetromino[row].length; col++) {
 			if (
@@ -32,7 +37,11 @@ export const isValidPos = (tetromino, tetrominoRow, tetrominoCol, playArea) => {
 	return true;
 };
 
-export const rapidFallDown = (tetromino, playArea, placeTetromino) => {
+export const rapidFallDown = (
+	tetromino: { name?: string; matrix: number[][]; row: number; col: number },
+	playArea: (string | number)[][],
+	placeTetromino: { (): void; (): void; (): void },
+) => {
 	const row = tetromino.row + 1;
 	if (!isValidPos(tetromino.matrix, row, tetromino.col, playArea)) {
 		tetromino.row = row - 1;
@@ -41,7 +50,11 @@ export const rapidFallDown = (tetromino, playArea, placeTetromino) => {
 	}
 	tetromino.row = row;
 };
-export const showGameMessage = (context, canvas, text) => {
+export const showGameMessage = (
+	context: CanvasRenderingContext2D,
+	canvas: HTMLCanvasElement,
+	text: string,
+) => {
 	context.fillStyle = 'black';
 	context.globalAlpha = 0.75;
 	context.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
@@ -53,26 +66,35 @@ export const showGameMessage = (context, canvas, text) => {
 	context.fillText(text, canvas.width / 2, canvas.height / 2);
 };
 
-export const rotateOnCliclUp = (tetromino, playArea) => {
+export const rotateOnCliclUp = (
+	tetromino: { name?: string; matrix: number[][]; row: number; col: number },
+	playArea: (string | number)[][],
+) => {
 	const matrix = rotate(tetromino.matrix);
 	if (isValidPos(matrix, tetromino.row, tetromino.col, playArea)) {
 		tetromino.matrix = matrix;
 	}
 };
-export const moveOnClickRight = (tetromino, playArea) => {
+export const moveOnClickRight = (
+	tetromino: { name?: string; matrix: number[][]; row: number; col: number },
+	playArea: (string | number)[][],
+) => {
 	const col = tetromino.col + 1;
 	if (isValidPos(tetromino.matrix, tetromino.row, tetromino.col, playArea)) {
 		tetromino.col = col;
 	}
 };
-export const moveOnClickLeft = (tetromino, playArea) => {
+export const moveOnClickLeft = (
+	tetromino: { name?: string; matrix: number[][]; row: number; col: number },
+	playArea: (string | number)[][],
+) => {
 	const col = tetromino.col - 1;
 	if (isValidPos(tetromino.matrix, tetromino.row, tetromino.col, playArea)) {
 		tetromino.col = col;
 	}
 };
-export const showNextTetromino = (name) => {
-	const block = document.querySelector('.tetromino');
+export const showNextTetromino = (name: string) => {
+	const block = document.querySelector('.tetromino') as HTMLDivElement;
 
 	switch (name) {
 		case 'I':
@@ -99,15 +121,15 @@ export const showNextTetromino = (name) => {
 	}
 };
 
-export const tetrisResize = () => {
-	const content = document.querySelector('.game-content');
-	if(window.screen.width < 630 && window.screen.width > 500){
-		content.style.transform = 'scale(1.3)'
+export const tetrisResize = (): void => {
+	const content = document.querySelector('.game-content') as HTMLDivElement;
+	if (window.screen.width < 630 && window.screen.width > 500) {
+		content.style.transform = 'scale(1.3)';
 	} else if (window.screen.width < 500 && window.screen.width > 380) {
 		content.style.transform = 'scale(1.5)';
-	} else if (window.screen.width < 380){
-		content.style.transform = 'scale(1.8)'
+	} else if (window.screen.width < 380) {
+		content.style.transform = 'scale(1.8)';
 	} else {
-		content.style.transform = 'scale(1)'
+		content.style.transform = 'scale(1)';
 	}
-}
+};

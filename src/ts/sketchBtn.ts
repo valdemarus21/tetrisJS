@@ -1,5 +1,5 @@
 export const addHoverForButtons = () => {
-	const createSVG = (width, height, radius) => {
+	const createSVG = (width: number, height: number, radius: number) => {
 		const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 
 		const rectangle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -30,8 +30,8 @@ export const addHoverForButtons = () => {
 		const groupBottom = document.createElement('div');
 
 		const svg = createSVG(
-			button.offsetWidth,
-			button.offsetHeight,
+			(button as HTMLButtonElement).offsetWidth,
+			(button as HTMLButtonElement).offsetHeight,
 			parseInt(style.borderRadius, 10),
 		);
 

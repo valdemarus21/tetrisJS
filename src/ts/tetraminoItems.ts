@@ -1,3 +1,4 @@
+
 export const tetraminoItems = {
 	'I': [
 		[0, 0, 0, 0],
@@ -35,7 +36,7 @@ export const tetraminoItems = {
 		[0, 0, 0],
 	],
 };
-export const colors = {
+export const colors: { [key: string]: string} = {
     'I': 'cyan',
     'O': 'yellow',
     'T': 'purple',

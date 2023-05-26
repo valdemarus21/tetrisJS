@@ -1,15 +1,10 @@
 {
-	"scripts": {
-		"build": "tsc --build",
-		"clean": "tsc --build --clean"
-	},
 	"compilerOptions": {
-		"noImplicitAny": false,
-		"noEmitOnError": true,
-		"removeComments": false,
-		"sourceMap": true,
-		"target": "es5",
-		"outDir": "dist"
+		"target": "ES6",
+		"module": "ESNext",
+		"outDir": "dist",
+		"strict": true,
+		"lib": ["es2022", "dom"]
 	},
-	"include": ["js/**/*"]
+	"include": ["src/**/*.ts"]
 }

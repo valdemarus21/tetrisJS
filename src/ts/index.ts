@@ -1,3 +1,4 @@
+import { tetraminoItems } from './tetraminoItems.js';
 import { tetrisContent } from './gameContent.js';
 import { createGameMenu } from './gameMenu.js';
 import { addHoverForButtons } from './sketchBtn.js';
@@ -12,27 +13,27 @@ import {
 	shuffle,
     tetrisResize,
 } from './utils.js';
-import { tetraminoItems } from './tetraminoItems.js';
 import { colors } from './tetraminoItems.js';
-const app = (difficult) => {
-	const gameContent = document.querySelector('.game-content');
+
+const app = (difficult: number) => {
+	const gameContent = document.querySelector('.game-content') as HTMLDivElement;
 	gameContent.innerHTML = '';
 	gameContent.innerHTML = tetrisContent;
 
-	const canvas = document.getElementById('game');
-	const context = canvas.getContext('2d');
-	const startBtn = document.querySelector('.start');
-	const pauseBtn = document.querySelector('.pause');
-	const restartBtn = document.querySelector('.restart');
-	const scoreBlock = document.querySelector('.score__total');
-	const topArrow = document.querySelector('.top');
-	const bottomArrow = document.querySelector('.bottom');
-	const leftArrow = document.querySelector('.left');
-	const rightArrow = document.querySelector('.right');
+	const canvas = document.getElementById('game') as HTMLCanvasElement;
+	const context = canvas.getContext('2d') as CanvasRenderingContext2D 
+	const startBtn = document.querySelector('.start') as HTMLButtonElement;
+	const pauseBtn = document.querySelector('.pause') as HTMLButtonElement;
+	const restartBtn = document.querySelector('.restart') as HTMLButtonElement;
+	const scoreBlock = document.querySelector('.score__total') as HTMLSpanElement
+	const topArrow = document.querySelector('.top') as HTMLDivElement;
+	const bottomArrow = document.querySelector('.bottom') as HTMLDivElement;
+	const leftArrow = document.querySelector('.left') as HTMLDivElement;
+	const rightArrow = document.querySelector('.right') as HTMLDivElement;
 
 	const squareSize = 32;
-	let tetraminoOrder = [];
-	let playArea = [];
+	let tetraminoOrder: string[] = [];
+	let playArea: (string | number )[][] = [];
 
 	for (let row = -2; row < 20; row++) {
 		playArea[row] = [];
@@ -45,10 +46,10 @@ const app = (difficult) => {
 	let tetramino = createTetramino();
 	let score = 0;
 	let isGameOver = false;
-	let requestAnimationId = null;
+	let requestAnimationId: number | null = null;
 
 	const showGameOver = () => {
-		cancelAnimationFrame(requestAnimationId);
+		cancelAnimationFrame(requestAnimationId!);
 		isGameOver = true;
 		showGameMessage(context, canvas, 'GAME OVER!');
 	};
@@ -58,8 +59,10 @@ const app = (difficult) => {
 			tetraminoOrder = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
 			shuffle(tetraminoOrder);
 		}
-		const name = tetraminoOrder.pop();
-		const matrix = tetraminoItems[name];
+		const name: string = tetraminoOrder.pop() || '';
+		const matrix = tetraminoItems[name as keyof typeof tetraminoItems];
+		console.log(tetraminoItems)
+		console.log(tetraminoOrder)
 		const col = playArea[0].length / 2 - Math.ceil(matrix[0]?.length / 2);
 		const row = name === 'I' ? -1 : -2;
 
@@ -82,13 +85,13 @@ const app = (difficult) => {
 			}
 		}
 		for (let row = playArea.length - 1; row > 0; ) {
-			if (playArea[row].every((cell) => !!cell)) {
+			if (playArea[row].every((cell: any) => !!cell)) {
 				for (let r = row; r >= 0; r--) {
 					for (let col = 0; col < playArea[r].length; col++) {
 						playArea[r][col] = playArea[r - 1][col];
 					}
 				}
-				scoreBlock.innerHTML = score += 5;
+				scoreBlock.innerHTML = (score += 5).toString();
 			} else {
 				row--;
 			}
@@ -96,14 +99,14 @@ const app = (difficult) => {
 		tetramino = createTetramino();
 	};
 	const game = () => {
-		showNextTetromino(tetraminoOrder.at(-1));
+		showNextTetromino(tetraminoOrder.at(-1)!);
 		requestAnimationId = requestAnimationFrame(game);
 		context.clearRect(0, 0, canvas.clientWidth, canvas.height);
 
 		for (let row = 0; row < 20; row++) {
 			for (let col = 0; col < 10; col++) {
 				if (playArea[row][col]) {
-					const name = playArea[row][col];
+					const name = playArea[row][col] as string;
 					context.fillStyle = colors[name];
 					context.fillRect(col * squareSize, row * squareSize, squareSize - 1, squareSize - 1);
 				}
@@ -160,7 +163,7 @@ const app = (difficult) => {
 
 	addHoverForButtons();
 	pauseBtn.addEventListener('click', () => {
-		cancelAnimationFrame(requestAnimationId);
+		cancelAnimationFrame(requestAnimationId!);
 		showGameMessage(context, canvas, 'PAUSED');
 		pauseBtn.disabled = true;
         startBtn.disabled = false;
