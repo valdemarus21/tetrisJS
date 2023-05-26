@@ -27,3 +27,13 @@ export const isValidPos = (tetromino, tetrominoRow, tetrominoCol, playArea) => {
 
 	return true;
 };
+
+export const rapidFallDown = (tetromino, playArea, placeTetromino) => {
+	const row = tetromino.row + 1;
+	if(!isValidPos(tetromino.matrix, row, tetromino.col, playArea)){
+		tetromino.row = row - 1;
+		placeTetromino()
+		return
+	}
+	tetromino.row = row
+}

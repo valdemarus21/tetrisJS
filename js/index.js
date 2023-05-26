@@ -1,7 +1,7 @@
 import { tetrisContent } from './gameContent.js';
 import { createGameMenu } from './gameMenu.js';
 import { addHoverForButtons } from './sketchBtn.js';
-import { isValidPos, shuffle } from './utils.js';
+import { isValidPos, rapidFallDown, shuffle } from './utils.js';
 import { tetraminoItems } from './tetraminoItems.js';
 import { colors } from './tetraminoItems.js';
 const app = (difficult) => {
@@ -57,19 +57,29 @@ const app = (difficult) => {
 	const placeTetramino = () => {
 		for (let row = 0; row < tetramino.matrix.length; row++) {
 			for (let col = 0; col < tetramino.matrix[row].length; col++) {
-                if(tetramino.matrix[row][col]){
-                    if(tetramino.row + row < 0){
-                        return
-                    }
-                    playArea[tetramino.row + row][tetramino.col + col] = tetramino.name
-                }
-            }
+				if (tetramino.matrix[row][col]) {
+					if (tetramino.row + row < 0) {
+						return;
+					}
+					playArea[tetramino.row + row][tetramino.col + col] = tetramino.name;
+				}
+			}
 		}
-        tetramino = createTetramino()
+		tetramino = createTetramino();
 	};
 	const game = () => {
 		requestAnimationId = requestAnimationFrame(game);
 		context.clearRect(0, 0, canvas.clientWidth, canvas.height);
+
+		for (let row = 0; row < 20; row++) {
+			for (let col = 0; col < 10; col++) {
+				if (playArea[row][col]) {
+					const name = playArea[row][col];
+					context.fillStyle = colors[name];
+					context.fillRect(col * squareSize, row * squareSize, squareSize -1, squareSize -1);
+				}
+			}
+		}
 
 		if (tetramino) {
 			if (++count > difficult) {
@@ -78,14 +88,13 @@ const app = (difficult) => {
 			}
 			if (!isValidPos(tetramino.matrix, tetramino.row, tetramino.col, playArea)) {
 				tetramino.row--;
-                placeTetramino()
+				placeTetramino();
 			}
 			context.fillStyle = colors[tetramino.name];
 
 			for (let row = 0; row < tetramino.matrix.length; row++) {
 				for (let col = 0; col < tetramino.matrix[row].length; col++) {
 					if (tetramino.matrix[row][col]) {
-                        console.log(tetramino)
 						context.fillRect(
 							(tetramino.col + col) * squareSize,
 							(tetramino.row + row) * squareSize,
@@ -97,6 +106,14 @@ const app = (difficult) => {
 			}
 		}
 	};
+
+    document.addEventListener('keydown', (e) => {
+        if(isGameOver) return
+        if(e.which === 40){
+            rapidFallDown(tetramino, playArea, placeTetramino)
+        }
+    })
+
 	startBtn.addEventListener('click', () => (requestAnimationId = requestAnimationFrame(game)));
 	addHoverForButtons();
 };
