@@ -1,7 +1,7 @@
 import { tetrisContent } from './gameContent.js';
 import { createGameMenu } from './gameMenu.js';
 import { addHoverForButtons } from './sketchBtn.js';
-import { isValidPos, rapidFallDown, shuffle } from './utils.js';
+import { isValidPos, rapidFallDown, showGameMessage, shuffle } from './utils.js';
 import { tetraminoItems } from './tetraminoItems.js';
 import { colors } from './tetraminoItems.js';
 const app = (difficult) => {
@@ -37,6 +37,12 @@ const app = (difficult) => {
 	let isGameOver = false;
 	let requestAnimationId = null;
 
+    const showGameOver = () => {
+        cancelAnimationFrame(requestAnimationId)
+        isGameOver = true
+        showGameMessage(context, canvas, 'GAME OVER!')
+    }
+
 	function createTetramino() {
 		if (tetraminoOrder.length === 0) {
 			tetraminoOrder = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
@@ -59,7 +65,7 @@ const app = (difficult) => {
 			for (let col = 0; col < tetramino.matrix[row].length; col++) {
 				if (tetramino.matrix[row][col]) {
 					if (tetramino.row + row < 0) {
-						return;
+						return showGameOver()
 					}
 					playArea[tetramino.row + row][tetramino.col + col] = tetramino.name;
 				}

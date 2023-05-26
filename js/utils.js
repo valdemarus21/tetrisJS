@@ -30,10 +30,21 @@ export const isValidPos = (tetromino, tetrominoRow, tetrominoCol, playArea) => {
 
 export const rapidFallDown = (tetromino, playArea, placeTetromino) => {
 	const row = tetromino.row + 1;
-	if(!isValidPos(tetromino.matrix, row, tetromino.col, playArea)){
+	if (!isValidPos(tetromino.matrix, row, tetromino.col, playArea)) {
 		tetromino.row = row - 1;
-		placeTetromino()
-		return
+		placeTetromino();
+		return;
 	}
-	tetromino.row = row
-}
+	tetromino.row = row;
+};
+export const showGameMessage = (context, canvas, text) => {
+	context.fillStyle = 'black';
+	context.globalAlpha = 0.75;
+	context.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
+	context.globalAlpha = 1;
+	context.fillStyle = 'white';
+	context.font = '36px monospace';
+	context.textAlign = 'center';
+	context.textBaseline = 'middle';
+	context.fillText(text, canvas.width / 2, canvas.height / 2);
+};
