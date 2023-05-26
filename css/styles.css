@@ -1,7 +1,7 @@
 
 @import url('./sketchBtn.css');
 @import url('./gameMenu.css');
-
+@import url('./tetromino.css');
 * {
 	box-sizing: border-box;
 }

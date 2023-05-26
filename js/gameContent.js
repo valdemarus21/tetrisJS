@@ -15,9 +15,9 @@ export const tetrisContent = `
 				</div>
 				<div class="game-content__info">
 					<div class="game-content__next">
-						<span class="next__title">next</span>
+						<span class="next__title">NEXT</span>
 						<div class="next__inner">
-							<div class="tetramino">
+							<div class="tetromino">
 								<span></span>
 								<span></span>
 								<span></span>
@@ -26,7 +26,7 @@ export const tetrisContent = `
 						</div>
 					</div>
 					<div class="game-content__score">
-						<span class="score__title">NEXT</span>
+						<span class="score__title">SCORE</span>
 						<span class="score__total">0</span>
 					</div>
 					<div class="game-buttons">
