@@ -1,9 +1,9 @@
 export const menuContent = `
 <div class="game-menu">
 		<span>CHOOSE YOUR LEVEL</span>
-		<button class="sketch-btn easy">EASY</button>
-		<button class="sketch-btn normal">NORMAL</button>
-		<button class="sketch-btn hard">HARD</button>
+		<button class="sketch-button easy">EASY</button>
+		<button class="sketch-button normal">NORMAL</button>
+		<button class="sketch-button hard">HARD</button>
 	</div>;
 `;
 
@@ -30,12 +30,12 @@ export const tetrisContent = `
 						<span class="score__total">0</span>
 					</div>
 					<div class="game-buttons">
-						<span class="sketch-btn" start>Start</span>
-						<span class="sketch-btn" pause>Pause</span>
-						<span class="sketch-btn" restart>Restart</span>
+						<span class="sketch-button" start>Start</span>
+						<span class="sketch-button" pause>Pause</span>
+						<span class="sketch-button" restart>Restart</span>
 					</div>
 					<div class="game-controls">
-						<button class="sketch-btn top" >
+						<button class="sketch-button top" >
 							<span>
 								<svg
 									fill="#ffffff"
@@ -48,7 +48,7 @@ export const tetrisContent = `
 								</svg>
 							</span>
 						</button>
-						<button class="sketch-btn  bottom">
+						<button class="sketch-button  bottom">
                             							<span>
 								<svg
 									fill="#ffffff"
@@ -61,7 +61,7 @@ export const tetrisContent = `
 								</svg>
 							</span>
                             </button
-						><button class="sketch-btn  left">
+						><button class="sketch-button  left">
 							<span>
 								<svg
 									fill="#ffffff"
@@ -74,7 +74,7 @@ export const tetrisContent = `
 								</svg>
 							</span>
 						</button>
-						<button class="sketch-btn right" >
+						<button class="sketch-button right" >
 							<span>
 								<svg
 									fill="#ffffff"
