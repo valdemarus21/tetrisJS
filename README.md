@@ -1,6 +1,6 @@
 # tetrisJS
 link on github pages : https://valdemarus21.github.io/tetrisJS/index.html
-- Введение
+- Введение.
   <br>
   Проект tetrisJS - является полноценной копией оригинальной игры тетрис.
   Он реализован с помощью такого стэка :
